@@ -9,9 +9,9 @@ public class Menu {
 	private String userInput; // Stores user input
 	private String embeddingsFilePath; // Stores file path
 	private Dictionary dict = new Dictionary(); // Instance of Dictionary to access the parse() method
-	private Map<String, Double[]> embeddings = new HashMap<>(); // A map to store parse() return
-	
-	// runMenu() 
+	private Map<String, double[]> embeddings = new HashMap<>(); // A map to store parse() return
+
+	// runMenu()
 	public void runMenu() throws Exception {
 		System.out.println(ConsoleColour.WHITE);
 		System.out.println("************************************************************");
@@ -30,7 +30,7 @@ public class Menu {
 			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 			System.out.print("Select Option [1-?]>");
 			userInput = input.nextLine();
-			
+
 			// Option selection
 			switch (userInput) {
 			case "1":
@@ -43,7 +43,7 @@ public class Menu {
 				System.out.println("A Map the size of " + embeddings.keySet().size() + " embeddings created");
 				break;
 			case "3":
-				dict.getUserInput(embeddings);
+				double[] userEmbeddingsAvg = dict.getAvgUserEmbeddings(embeddings, dict.getUserInput(embeddings));
 				break;
 			}
 		} while (true);

@@ -12,16 +12,17 @@ import java.util.Scanner;
 public class Dictionary {
 	private Scanner input = new Scanner(System.in); // Instance of Scanner
 	private final static int NUMBER_OF_FEATURES = 50; //
-	private String key; // Stores word as a key for a map
-	private Double[] value = new Double[NUMBER_OF_FEATURES]; // Stores vector(array of doubles) as a value for a map
 
 	// Parses the file and builds a new map
-	public Map<String, Double[]> parse(String path) throws Exception {
-		Map<String, Double[]> embeddings = new HashMap<>(); // Map Word/Embedding
+	public Map<String, double[]> parse(String path) throws Exception {
+		String key; // Stores word as a key for a map
+		Map<String, double[]> embeddings = new HashMap<>(); // Map Word/Embedding
 		String tmp[]; // Temporary stores an array of strings
 		try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
 			String next;
 			while ((next = br.readLine()) != null) { // Loop through each line in the embedding file
+
+				double[] value = new double[NUMBER_OF_FEATURES]; // Stores vector(array of doubles) as a value for a map
 				tmp = next.split(",");
 				key = tmp[0];
 				// Loop through the array starting at index 1 to avoid the "word" and populate
@@ -39,8 +40,8 @@ public class Dictionary {
 		return embeddings;
 	}
 
-	// Returns an validated array of user words
-	public String[] getUserInput(Map<String, Double[]> embeddings) {
+	// Returns a validated array of user words
+	public String[] getUserInput(Map<String, double[]> embeddings) {
 		String[] userWords;
 		String userInput;
 		boolean mapContainsFlag;
@@ -62,5 +63,21 @@ public class Dictionary {
 
 		return userWords;
 
+	}
+
+	public double[] getAvgUserEmbeddings(Map<String, double[]> embeddings, String[] userWords) {
+		double[] userWordEmbeddings = new double[NUMBER_OF_FEATURES];
+		double[] tmp;
+
+		for (String word : userWords) {
+			tmp = embeddings.get(word);
+			for (int i = 0; i < NUMBER_OF_FEATURES; i++) {
+				userWordEmbeddings[i] += tmp[i];
+			}
+		}
+		for (int i = 0; i < NUMBER_OF_FEATURES; i++) {
+			userWordEmbeddings[i] /= userWords.length;
+		}
+		return userWordEmbeddings;
 	}
 }
