@@ -29,18 +29,21 @@ public class Menu {
 			System.out.println("(-1) Quit");
 			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 			System.out.print("Select Option [1-?]>");
-			userInput = input.next();
+			userInput = input.nextLine();
 			
 			// Option selection
 			switch (userInput) {
 			case "1":
 				System.out.print("Specify a path and name for the Word Embeddings file>");
-				userInput = input.next();
+				userInput = input.nextLine();
 				setEmbeddingFilePath(userInput);
 				System.out.println("A new Embeddings file at " + userInput + " is being used");
 				System.out.println("Building a map...");
 				embeddings = dict.parse(getEmbeddingFilePath());
 				System.out.println("A Map the size of " + embeddings.keySet().size() + " embeddings created");
+				break;
+			case "3":
+				dict.getUserInput(embeddings);
 				break;
 			}
 		} while (true);
