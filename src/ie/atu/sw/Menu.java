@@ -1,6 +1,8 @@
 package ie.atu.sw;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -43,7 +45,15 @@ public class Menu {
 				System.out.println("A Map the size of " + embeddings.keySet().size() + " embeddings created");
 				break;
 			case "3":
+				List<Double> test= new ArrayList<>();
+				
 				double[] userEmbeddingsAvg = dict.getAvgUserEmbeddings(embeddings, dict.getUserInput(embeddings));
+				for (String word : embeddings.keySet())
+				{
+					double currentWord[] = embeddings.get(word);
+					test.add(dict.calculateEuclideanDistance(currentWord, userEmbeddingsAvg));   
+				}
+				
 				break;
 			}
 		} while (true);

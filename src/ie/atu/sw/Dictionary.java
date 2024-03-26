@@ -71,13 +71,24 @@ public class Dictionary {
 
 		for (String word : userWords) {
 			tmp = embeddings.get(word);
-			for (int i = 0; i < NUMBER_OF_FEATURES; i++) {
-				userWordEmbeddings[i] += tmp[i];
+			for (int i = 0; i < userWordEmbeddings.length; i++) {
+				userWordEmbeddings[i] = userWordEmbeddings[i] + tmp[i];
 			}
 		}
-		for (int i = 0; i < NUMBER_OF_FEATURES; i++) {
-			userWordEmbeddings[i] /= userWords.length;
+		for (int i = 0; i < userWordEmbeddings.length; i++) {
+			userWordEmbeddings[i] = userWordEmbeddings[i] / userWords.length;
 		}
 		return userWordEmbeddings;
 	}
+	
+	public double calculateEuclideanDistance(double[] point1, double[] point2) {
+        double sumOfSquaredDiffs = 0.0;
+        for (int i = 0; i < point1.length; i++) {
+            double diff = point2[i] - point1[i];
+            sumOfSquaredDiffs += diff * diff;
+        }
+
+        double distance = Math.sqrt(sumOfSquaredDiffs);
+        return distance;
+    }
 }
