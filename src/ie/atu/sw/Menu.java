@@ -12,8 +12,8 @@ public class Menu {
 	private String embeddingsFilePath; // Stores file path
 	private Dictionary dict = new Dictionary(); // Instance of Dictionary to access the parse() method
 	private Map<String, double[]> embeddings = new HashMap<>(); // A map to store parse() return
-
 	// runMenu()
+
 	public void runMenu() throws Exception {
 		System.out.println(ConsoleColour.WHITE);
 		System.out.println("************************************************************");
@@ -45,15 +45,29 @@ public class Menu {
 				System.out.println("A Map the size of " + embeddings.keySet().size() + " embeddings created");
 				break;
 			case "3":
-				List<Double> test= new ArrayList<>();
-				
+				// List<Double> test= new ArrayList<>();
+				List<Scores> testScores = new ArrayList<>();
+
 				double[] userEmbeddingsAvg = dict.getAvgUserEmbeddings(embeddings, dict.getUserInput(embeddings));
-				for (String word : embeddings.keySet())
-				{
+				for (String word : embeddings.keySet()) {
 					double currentWord[] = embeddings.get(word);
-					test.add(dict.calculateEuclideanDistance(currentWord, userEmbeddingsAvg));   
+					testScores.add(new Scores(word, dict.calculateEuclideanDistance(currentWord, userEmbeddingsAvg)));
+					// test.add(dict.calculateEuclideanDistance(currentWord, userEmbeddingsAvg));
 				}
-				
+
+				testScores.sort((o1, o2) -> o1.compareTo(o2));
+
+				for (int i = 1; i < 4; i++) {
+					var tmp = testScores.get(i);
+					System.out.println("Word: " + tmp.getWord() + " - Score: " + tmp.getScore());
+
+				}
+
+				/*
+				 * for (int i = 0; i < testScores.size(); i++) { var tmp = testScores.get(i);
+				 * System.out.println("Word: " + tmp.getWord() + " - Score: " + tmp.getScore());
+				 * }
+				 */
 				break;
 			}
 		} while (true);

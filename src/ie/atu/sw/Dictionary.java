@@ -3,9 +3,7 @@ package ie.atu.sw;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -80,15 +78,15 @@ public class Dictionary {
 		}
 		return userWordEmbeddings;
 	}
-	
-	public double calculateEuclideanDistance(double[] point1, double[] point2) {
-        double sumOfSquaredDiffs = 0.0;
-        for (int i = 0; i < point1.length; i++) {
-            double diff = point2[i] - point1[i];
-            sumOfSquaredDiffs += diff * diff;
-        }
 
-        double distance = Math.sqrt(sumOfSquaredDiffs);
-        return distance;
-    }
+	public double calculateEuclideanDistance(double[] point1, double[] point2) {
+		double sumOfSquaredDiffs = 0.0;
+		for (int i = 0; i < point1.length; i++) {
+			double diff = point2[i] - point1[i];
+			sumOfSquaredDiffs += diff * diff;
+		}
+
+		double distance = Math.sqrt(sumOfSquaredDiffs);
+		return distance;
+	}
 }
