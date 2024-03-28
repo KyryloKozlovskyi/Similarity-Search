@@ -23,7 +23,7 @@ public class Dictionary {
 		String tmp[]; // Temporary stores an array of strings
 		try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
 			String next;
-			System.out.println("An Embeddings file at " + path + " is being used");
+			System.out.println("An embeddings file at " + path + " is being used");
 			System.out.println("Building a map...");
 			while ((next = br.readLine()) != null) { // Loop through each line in the embedding file
 
@@ -43,7 +43,7 @@ public class Dictionary {
 			throw new Exception("[ERROR] Encountered a problem parsing the file. " + e.getMessage());
 		}
 
-		System.out.println("A Map the size of " + embeddings.keySet().size() + " embeddings created");
+		System.out.println("A map the size of " + embeddings.keySet().size() + " embeddings created");
 
 		return embeddings;
 	}
@@ -102,16 +102,62 @@ public class Dictionary {
 		return distance;
 	}
 
+	// Cosine Distance
+	public double calculateCosineDistance(double[] point1, double[] point2) {
+		   double dotProduct = dotProduct(point1, point2);
+		    double magnitude1 = vectorNorm(point1);
+		    double magnitude2 = vectorNorm(point2);
+		    
+		    double cosineSimilarity = dotProduct / (magnitude1 * magnitude2);
+		    
+		    // Cosine distance is 1 - cosine similarity
+		    double cosineDistance = 1 - cosineSimilarity;
+		return cosineDistance;
+	}
+
+	// Dot Product
+	public double dotProduct(double[] point1, double[] point2) {
+
+		double result = 0;
+		for (int i = 0; i < point1.length; i++) {
+			result += point1[i] * point2[i];
+		}
+		return result;
+	}
+
+	// Cosine
+	public double vectorNorm(double[] point) {
+		double result = 0;
+		for (double aV : point) {
+			result += aV * aV;
+		}
+		result = (double) Math.sqrt(result);
+		return result;
+	}
+
 	// Takes user input return. ScoresDataType list
-	public List<Scores> getWordScores(String[] userWords, Map<String, double[]> embeddings) {
+	public List<Scores> getWordScores(String[] userWords, Map<String, double[]> embeddings, int comparisonSelection) {
 		List<Scores> userScores = new ArrayList<>(); // Stores user scores
 		double[] userEmbeddingsAvg = getAvgUserEmbeddings(embeddings, userWords); // avg vectors
-
-		for (String word : embeddings.keySet()) {
-			double currentWord[] = embeddings.get(word);
-			userScores.add(new Scores(word, calculateEuclideanDistance(currentWord, userEmbeddingsAvg)));
+		//calculateEuclideanDistance
+		if (comparisonSelection == 1) {
+			for (String word : embeddings.keySet()) {
+				double currentWord[] = embeddings.get(word);
+				userScores.add(new Scores(word, calculateEuclideanDistance(currentWord, userEmbeddingsAvg)));
+			}
+		//calculateCosineDistance
+		} else if (comparisonSelection == 2) {
+			for (String word : embeddings.keySet()) {
+				double currentWord[] = embeddings.get(word);
+				userScores.add(new Scores(word, calculateCosineDistance(currentWord, userEmbeddingsAvg)));
+			}
+		//dotProduct
+		} else if (comparisonSelection == 3) {
+			for (String word : embeddings.keySet()) {
+				double currentWord[] = embeddings.get(word);
+				userScores.add(new Scores(word, dotProduct(currentWord, userEmbeddingsAvg)));
+			}
 		}
-
 		return userScores;
 
 	}
@@ -132,14 +178,14 @@ public class Dictionary {
 	}
 
 	// Actual runner MENU OPTION 3
-	public void processWords(Map<String, double[]> embeddings, int n) {
+	public void processWords(Map<String, double[]> embeddings, int n, String path, int comparisonSelection) {
 		String[] userInput = getUserInput(embeddings);
 		List<Scores> userScores = new ArrayList<>();
-		userScores = getWordScores(userInput, embeddings);
+		userScores = getWordScores(userInput, embeddings, comparisonSelection);
 		userScores = sortWordScores(userScores);
 		printProcessedWords(userScores, n);
 
-		writeToFile("./out.txt", buildString(userScores, userInput, 3));
+		writeToFile(path, buildString(userScores, userInput, n));
 
 	}
 
@@ -156,11 +202,12 @@ public class Dictionary {
 		// Append each word to the StringBuilder
 
 		for (int i = 1; i < n + 1; i++) {
-			stringBuilder.append(scoresList.get(i).getWord()).append(" : ").append(scoresList.get(i).getScore()).append("\n"); // Add
-																													// a
-																													// space
-																													// between
-																													// words
+			stringBuilder.append(scoresList.get(i).getWord()).append(" : ").append(scoresList.get(i).getScore())
+					.append("\n"); // Add
+			// a
+			// space
+			// between
+			// words
 
 		}
 
