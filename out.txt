@@ -1,0 +1,6 @@
+Input: 
+flower 
+Output: 
+fruit : 3.3781195166517803
+lavender : 3.4806233731930045
+tree : 3.5077477912417896

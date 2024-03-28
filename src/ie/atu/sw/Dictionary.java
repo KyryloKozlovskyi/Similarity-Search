@@ -23,6 +23,7 @@ public class Dictionary {
 		String tmp[]; // Temporary stores an array of strings
 		try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
 			String next;
+			System.out.print(ConsoleColour.YELLOW);
 			System.out.println("An embeddings file at " + path + " is being used");
 			System.out.println("Building a map...");
 			while ((next = br.readLine()) != null) { // Loop through each line in the embedding file
@@ -40,9 +41,10 @@ public class Dictionary {
 				embeddings.put(key, value);
 			}
 		} catch (Exception e) {
-			throw new Exception("[ERROR] Encountered a problem parsing the file. " + e.getMessage());
+			System.out.print(ConsoleColour.RED);
+			throw new Exception("[ERROR] Encountered a problem parsing the file: " + e.getMessage());
 		}
-
+		System.out.print(ConsoleColour.GREEN);
 		System.out.println("A map the size of " + embeddings.keySet().size() + " embeddings created");
 
 		return embeddings;
@@ -64,7 +66,7 @@ public class Dictionary {
 			for (int i = 0; i < userWords.length; i++) {
 				if (!embeddings.containsKey(userWords[i])) {
 					mapContainsFlag = false;
-					System.out.println("There is no \"" + userWords[i] + "\" in the map. Try a different word!");
+					System.out.println("There is no \"" + userWords[i] + "\" in the map. Try a different word");
 				}
 			}
 		} while (!mapContainsFlag);
@@ -104,14 +106,14 @@ public class Dictionary {
 
 	// Cosine Distance
 	public double calculateCosineDistance(double[] point1, double[] point2) {
-		   double dotProduct = dotProduct(point1, point2);
-		    double magnitude1 = vectorNorm(point1);
-		    double magnitude2 = vectorNorm(point2);
-		    
-		    double cosineSimilarity = dotProduct / (magnitude1 * magnitude2);
-		    
-		    // Cosine distance is 1 - cosine similarity
-		    double cosineDistance = 1 - cosineSimilarity;
+		double dotProduct = dotProduct(point1, point2);
+		double magnitude1 = vectorNorm(point1);
+		double magnitude2 = vectorNorm(point2);
+
+		double cosineSimilarity = dotProduct / (magnitude1 * magnitude2);
+
+		// Cosine distance is 1 - cosine similarity
+		double cosineDistance = 1 - cosineSimilarity;
 		return cosineDistance;
 	}
 
@@ -139,23 +141,17 @@ public class Dictionary {
 	public List<Scores> getWordScores(String[] userWords, Map<String, double[]> embeddings, int comparisonSelection) {
 		List<Scores> userScores = new ArrayList<>(); // Stores user scores
 		double[] userEmbeddingsAvg = getAvgUserEmbeddings(embeddings, userWords); // avg vectors
-		//calculateEuclideanDistance
+		// calculateEuclideanDistance
 		if (comparisonSelection == 1) {
 			for (String word : embeddings.keySet()) {
 				double currentWord[] = embeddings.get(word);
 				userScores.add(new Scores(word, calculateEuclideanDistance(currentWord, userEmbeddingsAvg)));
 			}
-		//calculateCosineDistance
+			// calculateCosineDistance
 		} else if (comparisonSelection == 2) {
 			for (String word : embeddings.keySet()) {
 				double currentWord[] = embeddings.get(word);
 				userScores.add(new Scores(word, calculateCosineDistance(currentWord, userEmbeddingsAvg)));
-			}
-		//dotProduct
-		} else if (comparisonSelection == 3) {
-			for (String word : embeddings.keySet()) {
-				double currentWord[] = embeddings.get(word);
-				userScores.add(new Scores(word, dotProduct(currentWord, userEmbeddingsAvg)));
 			}
 		}
 		return userScores;
@@ -170,7 +166,7 @@ public class Dictionary {
 
 	// Must take a sorted list
 	public void printProcessedWords(List<Scores> userScores, int n) {
-
+		System.out.print(ConsoleColour.WHITE_BOLD_BRIGHT);
 		for (int i = 1; i < n + 1; i++) {
 			var tmp = userScores.get(i);
 			System.out.println("Word: " + tmp.getWord() + " - Score: " + tmp.getScore());
@@ -178,7 +174,7 @@ public class Dictionary {
 	}
 
 	// Actual runner MENU OPTION 3
-	public void processWords(Map<String, double[]> embeddings, int n, String path, int comparisonSelection) {
+	public void processWords(Map<String, double[]> embeddings, int n, String path, int comparisonSelection) throws IOException {
 		String[] userInput = getUserInput(embeddings);
 		List<Scores> userScores = new ArrayList<>();
 		userScores = getWordScores(userInput, embeddings, comparisonSelection);
@@ -214,13 +210,18 @@ public class Dictionary {
 		return stringBuilder.toString();
 	}
 
-	public static void writeToFile(String fileName, String words) {
+	public void writeToFile(String fileName, String words) throws IOException{
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
 			// Write data to the file
 			writer.write(words);
-			System.out.println("Data has been written to the file successfully.");
+			System.out.print(ConsoleColour.GREEN);
+			System.out.println("Data has been written to the file successfully");
+			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+			System.out.print("\nPress Enter to continue>");
+			input.nextLine();
 		} catch (IOException e) {
-			System.err.println("Error writing to the file: " + e.getMessage());
+			System.out.print(ConsoleColour.RED);
+			System.err.println("[ERROR] writing to the file: " + e.getMessage());
 		}
 	}
 
