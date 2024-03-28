@@ -40,13 +40,14 @@ public class Dictionary {
 
 				embeddings.put(key, value);
 			}
+			br.close();
 		} catch (Exception e) {
 			System.out.print(ConsoleColour.RED);
 			throw new Exception("[ERROR] Encountered a problem parsing the file: " + e.getMessage());
+			
 		}
 		System.out.print(ConsoleColour.GREEN);
 		System.out.println("A map the size of " + embeddings.keySet().size() + " embeddings created");
-
 		return embeddings;
 	}
 
@@ -57,6 +58,7 @@ public class Dictionary {
 		boolean mapContainsFlag;
 
 		do {
+			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 			mapContainsFlag = true;
 			System.out.print("Enter a Word or Text>");
 			userInput = input.nextLine();
@@ -66,6 +68,7 @@ public class Dictionary {
 			for (int i = 0; i < userWords.length; i++) {
 				if (!embeddings.containsKey(userWords[i])) {
 					mapContainsFlag = false;
+					System.out.print(ConsoleColour.RED);
 					System.out.println("There is no \"" + userWords[i] + "\" in the map. Try a different word");
 				}
 			}
@@ -174,7 +177,8 @@ public class Dictionary {
 	}
 
 	// Actual runner MENU OPTION 3
-	public void processWords(Map<String, double[]> embeddings, int n, String path, int comparisonSelection) throws IOException {
+	public void processWords(Map<String, double[]> embeddings, int n, String path, int comparisonSelection)
+			throws IOException {
 		String[] userInput = getUserInput(embeddings);
 		List<Scores> userScores = new ArrayList<>();
 		userScores = getWordScores(userInput, embeddings, comparisonSelection);
@@ -188,29 +192,15 @@ public class Dictionary {
 	public static String buildString(List<Scores> scoresList, String[] userInput, int n) {
 		StringBuilder stringBuilder = new StringBuilder();
 
-		stringBuilder.append("Input: \n");
-
-		for (String word : userInput) {
-			stringBuilder.append(word).append(" "); // Add a space between words
-		}
-
-		stringBuilder.append("\nOutput: \n");
-		// Append each word to the StringBuilder
-
 		for (int i = 1; i < n + 1; i++) {
-			stringBuilder.append(scoresList.get(i).getWord()).append(" : ").append(scoresList.get(i).getScore())
-					.append("\n"); // Add
-			// a
-			// space
-			// between
-			// words
-
+			stringBuilder.append(scoresList.get(i).getWord()).append(", ").append(scoresList.get(i).getScore())
+					.append("\n");
 		}
 
 		return stringBuilder.toString();
 	}
 
-	public void writeToFile(String fileName, String words) throws IOException{
+	public void writeToFile(String fileName, String words) throws IOException {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
 			// Write data to the file
 			writer.write(words);
@@ -219,6 +209,7 @@ public class Dictionary {
 			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 			System.out.print("\nPress Enter to continue>");
 			input.nextLine();
+			writer.close();
 		} catch (IOException e) {
 			System.out.print(ConsoleColour.RED);
 			System.err.println("[ERROR] writing to the file: " + e.getMessage());

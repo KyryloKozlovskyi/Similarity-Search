@@ -66,6 +66,7 @@ public class Menu {
 			case "-1":
 				System.out.print(ConsoleColour.RED);
 				System.out.println("Shutting down....");
+				System.out.println(ConsoleColour.RESET);
 				System.exit(0);
 				break;
 			}
