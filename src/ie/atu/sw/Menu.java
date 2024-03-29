@@ -4,20 +4,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Menu class is used to Display console interface and process user input.
+ * Contains methods (setters and getters) that allow users to specify paths and
+ * environmental variables.
+ */
 public class Menu {
 	// User input
-	private Scanner input = new Scanner(System.in); // Instance of Scanner
-	private String userInput; // Stores user input
-	// Env variables (default)
-	private String embeddingsFilePath; // Stores file path
-	private String outputFilePath; // Stores output file path
-	private int topN; // Default 3
-	private int comparisonSelection;
-	// Data
+	private Scanner input = new Scanner(System.in);
+	private String userInput;
+	// Environmental variables
+	private String embeddingsFilePath; // Stores Embeddings file path
+	private String outputFilePath; // Stores Output file path
+	private int topN; // Stores N value
+	private int comparisonSelection; // Stores algorithm option
+	// Data processing
 	private Dictionary dict = new Dictionary(); // Instance of Dictionary to access the parse() method
 	private Map<String, double[]> embeddings = new HashMap<>(); // A map to store parse() return
-	// runMenu()
 
+	/**
+	 * Displays console interface. The runMenu() is used to process user input.
+	 * 
+	 * @throws Exception
+	 */
 	public void runMenu() throws Exception {
 		System.out.println(ConsoleColour.RESET);
 		System.out.println(ConsoleColour.WHITE);
@@ -31,7 +40,7 @@ public class Menu {
 			System.out.println(ConsoleColour.WHITE);
 			System.out.println("************************************************************");
 			System.out.println("* (1) Specify Embeddings File Path and Populate a Map      *");
-			System.out.println("* (2) Specify an Output File                               *");
+			System.out.println("* (2) Specify an Output File Path                          *");
 			System.out.println("* (3) Specify N - Number of Top Matches                    *");
 			System.out.println("* (4) Specify Similarity Comparison Algorithm              *");
 			System.out.println("* (5) Print Current Settings                               *");
@@ -44,26 +53,29 @@ public class Menu {
 
 			// Option selection
 			switch (userInput) {
-			case "1":
+			case "1": // Embeddings File path
 				setEmbeddingFilePath();
 				embeddings = dict.parse(getEmbeddingFilePath());
 				break;
-			case "2":
+			case "2": // Output File path
 				setOutputFilePath();
 				break;
-			case "3":
+			case "3": // N
 				setTopN();
 				break;
-			case "4":
+			case "4": // Algorithm
 				setComparisonSelection();
 				break;
-			case "5":
+			case "5": // Current Settings
 				printCurrentSettings();
 				break;
-			case "6":
+			case "6": // Process user input
 				dict.processWords(embeddings, topN, getOutputFilePath(), comparisonSelection);
+				System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+				System.out.print("\nPress Enter to continue>");
+				input.nextLine();
 				break;
-			case "-1":
+			case "-1": // Quit
 				System.out.print(ConsoleColour.RED);
 				System.out.println("Shutting down....");
 				System.out.println(ConsoleColour.RESET);
@@ -73,6 +85,9 @@ public class Menu {
 		} while (true);
 	}
 
+	/**
+	 * Prints current user settings.
+	 */
 	public void printCurrentSettings() {
 		System.out.println("Current Settings: ");
 		System.out.print(ConsoleColour.YELLOW);
@@ -85,11 +100,19 @@ public class Menu {
 		input.nextLine();
 	}
 
-	// EMB FILE
+	// Embeddings File
+	/**
+	 * embeddingsFilePath getter.
+	 * 
+	 * @return embeddingsFilePath
+	 */
 	public String getEmbeddingFilePath() {
 		return embeddingsFilePath;
 	}
 
+	/**
+	 * embeddingsFilePath setter. Allows user to specify Embeddings file path.
+	 */
 	public void setEmbeddingFilePath() {
 		System.out.print("Enter the file path (or press Enter to use the default path: ./word-embeddings.txt)>");
 		userInput = input.nextLine();
@@ -100,11 +123,19 @@ public class Menu {
 		}
 	}
 
-	// OUTPUT FILE
+	// Output file
+	/**
+	 * outputFilePath getter.
+	 * 
+	 * @return outputFilePath
+	 */
 	public String getOutputFilePath() {
 		return outputFilePath;
 	}
 
+	/**
+	 * outputFilePath setter. Allows user to specify Output file path.
+	 */
 	public void setOutputFilePath() {
 		System.out.print("Enter the file path (or press Enter to use the default path: ./out.txt)>");
 		userInput = input.nextLine();
@@ -117,11 +148,19 @@ public class Menu {
 		System.out.println("An output file at " + getOutputFilePath() + " is being used");
 	}
 
-	// TOP N
+	// Top N
+	/**
+	 * topN getter.
+	 * 
+	 * @return topN
+	 */
 	public int getTopN() {
 		return topN;
 	}
 
+	/**
+	 * topN setter. Allows user to specify a number of top matches (N).
+	 */
 	public void setTopN() {
 		System.out.print("Enter a number of top matches (N) to save (or press Enter to use the default value: 3)>");
 		userInput = input.nextLine();
@@ -134,11 +173,20 @@ public class Menu {
 		System.out.println("The N value of " + getTopN() + " is being used");
 	}
 
-	// Comp
+	// Comparison
+	/**
+	 * comparisonSelection getter.
+	 * 
+	 * @return comparisonSelection
+	 */
 	public int getComparisonSelection() {
 		return comparisonSelection;
 	}
 
+	/**
+	 * comparisonSelection setter. Allows user to select a Vector Comparison
+	 * Algorithm.
+	 */
 	public void setComparisonSelection() {
 		System.out.print(
 				"Enter a number (or press Enter to use the default algortihm: Euclidean Distance)\n1 - Euclidean Distance\n2 - Cosine Distance\nSelect Option [1-2]>");
@@ -152,6 +200,9 @@ public class Menu {
 		System.out.println(printComparisonSelection(getComparisonSelection()) + " is being used");
 	}
 
+	/**
+	 * Prints Comparison Algorithm options.
+	 */
 	public String printComparisonSelection(int n) {
 		String returnString = "";
 		if (this.comparisonSelection == 1) {

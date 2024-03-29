@@ -9,6 +9,10 @@ package ie.atu.sw;
  *  
  *  See https://en.wikipedia.org/wiki/ANSI_escape_code for a decent description.
  */
+/**
+ * A class of constants. ConsoleColour is used for customizing the console
+ * interface.
+ */
 public enum ConsoleColour {
 	// Reset
 	RESET("Reset", "0"),

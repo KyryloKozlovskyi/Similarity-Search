@@ -206,9 +206,6 @@ public class Dictionary {
 			writer.write(words);
 			System.out.print(ConsoleColour.GREEN);
 			System.out.println("Data has been written to the file successfully");
-			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-			System.out.print("\nPress Enter to continue>");
-			input.nextLine();
 			writer.close();
 		} catch (IOException e) {
 			System.out.print(ConsoleColour.RED);
