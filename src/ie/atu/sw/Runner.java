@@ -1,9 +1,9 @@
 package ie.atu.sw;
 
 /**
- *@author Kyrylo Kozlovskyi G00425385
- *@version 1.0
- *@since JavaSE-17
+ * @author Kyrylo Kozlovskyi G00425385
+ * @version 1.0
+ * @since JavaSE-17
  */
 
 /**

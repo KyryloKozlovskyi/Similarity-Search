@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
+ *@author Kyrylo Kozlovskyi G00425385
+ *@version 1.0
+ *@since JavaSE-17
+ */
+
+/**
  * Menu class is used to Display console interface and process user input.
  * Contains methods (setters and getters) that allow users to specify paths and
  * environmental variables.
