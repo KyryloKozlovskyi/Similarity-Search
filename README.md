@@ -22,7 +22,8 @@ Open the directory containing the .jar file using the Command Line, and use the 
 4. Enter "4" - to Specify the Similarity Comparison Algorithm (or Press "enter" to use the default algorithm "Euclidean Distance").
 5. Enter "5" - (Optional) to Print Current Settings (then press "enter" to return to the menu).
 6. Enter "6" - to Enter a Word (or Text) to Process. *NOTE! The Word (or Text) must be a valid word from the Embeddings File* (then press "enter" to return to the menu). 
-
+7. Enter "-1" - (Optional) to Quit.
+*Note! You have to make sure the Embeddings File Path, Output File Path, Number of Top Matches, and Similarity Comparison Algorithm are specified before Entering a Word (or Text) to Process.
 ## Features
 
 - **Parsing Word Embeddings**: Parses word embeddings from a file into a HashMap structure.
@@ -30,4 +31,5 @@ Open the directory containing the .jar file using the Command Line, and use the 
 - **Similarity Calculation**: Calculates similarity scores using either Euclidean Distance or Cosine Distance.
 - **Output Generation**: Generates output (console, file) containing the top N matches (words) and their similarity scores.
 - **Customizable Settings**: Allows the user to specify paths for embeddings file and output file, set the number of top matches (N), and select the similarity comparison algorithm.
+- **Default Settings**: Allows the user to use the default settings.
 - **Settings View**: Settings can be viewed at any time (to confirm settings).
