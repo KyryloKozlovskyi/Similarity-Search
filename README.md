@@ -23,7 +23,8 @@ Open the directory containing the .jar file using the Command Line, and use the 
 5. Enter "5" - (Optional) to Print Current Settings (then press "enter" to return to the menu).
 6. Enter "6" - to Enter a Word (or Text) to Process. *NOTE! The Word (or Text) must be a valid word from the Embeddings File* (then press "enter" to return to the menu). 
 7. Enter "-1" - (Optional) to Quit.
-*Note! You have to make sure the Embeddings File Path, Output File Path, Number of Top Matches, and Similarity Comparison Algorithm are specified before Entering a Word (or Text) to Process.
+## Note! You have to make sure the Embeddings File Path, Output File Path, Number of Top Matches, and Similarity Comparison Algorithm are specified before Entering a Word (or Text) to Process.
+
 ## Features
 
 - **Parsing Word Embeddings**: Parses word embeddings from a file into a HashMap structure.
