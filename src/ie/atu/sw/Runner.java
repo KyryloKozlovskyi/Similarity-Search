@@ -1,7 +1,7 @@
 package ie.atu.sw;
 
 /**
- * @author Kyrylo Kozlovskyi G00425385
+ * @author Kyrylo Kozlovskyi G00425385 https://github.com/KyryloKozlovskyi/Similarity-Search
  * @version 1.0
  * @since JavaSE-17
  */
@@ -10,7 +10,6 @@ package ie.atu.sw;
  * Main Runner class to run the code.
  */
 public class Runner {
-
 	private static Menu mainMenu = new Menu(); // Instance of the Menu class to access the runMenu() method.
 
 	/**
@@ -22,5 +21,4 @@ public class Runner {
 	public static void main(String[] args) throws Exception {
 		mainMenu.runMenu(); // runMenu() call. Runs the menu loop.
 	}
-
 }

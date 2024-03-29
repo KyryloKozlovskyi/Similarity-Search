@@ -1,7 +1,7 @@
 package ie.atu.sw;
 
 /**
- * @author Kyrylo Kozlovskyi G00425385
+ * @author Kyrylo Kozlovskyi G00425385 https://github.com/KyryloKozlovskyi/Similarity-Search
  * @version 1.0
  * @since JavaSE-17
  */
@@ -63,11 +63,10 @@ public class Scores implements Comparable<Scores> {
 	/**
 	 * Overridden compareTo method to compare Scores objects by its score value.
 	 * 
-	 * @param o
+	 * @param s
 	 */
 	@Override
-	public int compareTo(Scores o) {
-		return Double.compare(this.score, o.score);
+	public int compareTo(Scores s) {
+		return Double.compare(this.score, s.score);
 	}
-
 }

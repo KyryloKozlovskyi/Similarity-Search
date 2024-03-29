@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- *@author Kyrylo Kozlovskyi G00425385
+ *@author Kyrylo Kozlovskyi G00425385 https://github.com/KyryloKozlovskyi/Similarity-Search
  *@version 1.0
  *@since JavaSE-17
  */
@@ -56,7 +56,6 @@ public class Menu {
 			System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 			System.out.print("Select Option [1-6]>");
 			userInput = input.nextLine();
-
 			// Option selection
 			switch (userInput) {
 			case "1": // Embeddings File path
@@ -218,5 +217,4 @@ public class Menu {
 		}
 		return returnString;
 	}
-
 }
